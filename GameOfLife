@@ -1,0 +1,289 @@
+//Name : Milind Parab
+//Poly ID : 0464924
+//Major : EE Grad Student
+
+// Conway’s Game of Life Assignment
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+using System.IO;
+
+namespace Assignment1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int count = 0; // for counting the neighbours
+            int repeat = 1; // Run the loop for 10 times
+            int input_row = 0; // Read Rows and Columns from the file
+            int input_cols = 0;
+            string[,] element = new string[5, 5]; // Element is the matrix for original array
+		try{
+            FileStream fs = new FileStream("life.txt", FileMode.Open, FileAccess.Read); // open the life.txt file and read the file
+            StreamReader sr = new StreamReader(fs); 
+            string str1 = sr.ReadLine();
+     
+                var numbers = str1[0];
+                input_row = Convert.ToInt32(numbers); // Read the rows
+                numbers = str1[2];
+                input_cols = Convert.ToInt32(numbers); // Read the columns
+
+                input_row = input_row - 48;
+                input_cols = input_cols - 48;
+
+                for (int i4 = 0; i4 < input_row; i4++)
+                {
+                    var str = sr.ReadLine();
+                    for (int j4 = 0; j4 < input_cols; j4++)
+                    {
+                        var fields = str[j4];
+                        element[i4, j4] = Convert.ToString(fields);
+                    }
+                } 
+                sr.Close();
+                fs.Close(); // Close the file
+            }
+	   catch (IOException e){
+	       }
+                
+            string[,] new_element = new string[7, 7];  // Put the oroginal matrix in to 7*7 matrix with addtional 2 rows and columns
+            string[,] Final_element = new string[7, 7];
+
+            // Create the 7*7 matrix with all elements with "_"
+            
+            for (int i1 = 0; i1 < 7; i1++) // make all the elements of the new array = "_"
+            {
+                for (int j1 = 0; j1 < 7; j1++)
+                {
+                    new_element[i1, j1] = "_";
+                    Final_element[i1, j1] = "_";
+                    
+                }
+            }
+
+
+            // Map the 5*5 matrix to 7*7 matrix
+
+            for (int i2 = 0; i2 < 5; i2++)
+            {
+                for (int j2 = 0; j2 < 5; j2++)
+                {
+                    if (element[i2, j2] == "*")
+                    {
+                        i2 = i2 + 1;
+                        j2 = j2 + 1;
+                        new_element[i2, j2] = "*";
+                        Final_element[i2, j2] = "*";
+                        i2 = i2 - 1;
+                        j2 = j2 - 1;
+                    }
+                    else
+                    {
+                        i2 = i2 + 1;
+                        j2 = j2 + 1;
+                        new_element[i2, j2] = "_";
+                        Final_element[i2, j2] = "_";
+                        i2 = i2 - 1;
+                        j2 = j2 - 1;
+                    }
+                   
+                }
+
+            }
+
+
+    // Repeat the iteration for 10 times as per the stated in the assignment problem
+         Repeat10 :
+
+    // check the conditions for "Death" and "Survival"
+            for (int i = 1; i < 6; i++)
+            {
+                for (int j = 1; j < 6; j++)
+                {
+                    if (new_element[i, j] == "*")
+                    {
+                        i = i - 1; //1st neigh
+                        j = j - 1;
+                        if (new_element[i, j] == "*")
+                        {
+                            count = count + 1;
+                        }
+
+                        j = j + 1; //2nd neigh
+                        if (new_element[i, j] == "*")
+                        {
+                            count = count + 1;
+                        }
+
+                        j = j + 1; // 3rd neigh
+                        if (new_element[i, j] == "*")
+                        {
+                            count = count + 1;
+                        }
+                        ////////////////////////////////////////////
+                        i = i + 1; // 6 tht neigh
+
+                        if (new_element[i, j] == "*")
+                        {
+                            count = count + 1;
+                        }
+                        j = j - 2; // 4th neigh
+                        if (new_element[i, j] == "*")
+                        {
+                            count = count + 1;
+                        }
+                        ////////////////////////////////////////////
+                        i = i + 1; //7th neigh
+                        if (new_element[i, j] == "*")
+                        {
+                            count = count + 1;
+                        }
+                        j = j + 1; // 8th neigh
+                        if (new_element[i, j] == "*")
+                        {
+                            count = count + 1;
+                        }
+                        j = j + 1; // 9th neigh
+                        if (new_element[i, j] == "*")
+                        {
+                            count = count + 1;
+                        }
+
+                        i = i - 1;
+                        j = j - 1;
+
+                        int row = i;
+                        int col = j;
+
+                        if (count == 2 || count == 3)
+                        {
+                            Final_element[row, col] = "*";
+                        }
+
+                      
+                        if (count < 2 || count > 3)
+                        {
+                            Final_element[row, col] = "_";
+                        }
+                        count = 0;
+
+       // Check the condition for the "Birth"
+
+                    }
+                    else
+                    {
+                     
+                        {
+                            i = i - 1; //1st neigh
+                            j = j - 1;
+                            if (new_element[i, j] == "*")
+                            {
+                                count = count + 1;
+                            }
+
+                            j = j + 1; //2nd neigh
+                            if (new_element[i, j] == "*")
+                            {
+                                count = count + 1;
+                            }
+
+                            j = j + 1; // 3rd neigh
+                            if (new_element[i, j] == "*")
+                            {
+                                count = count + 1;
+                            }
+                            ////////////////////////////////////////////
+                            i = i + 1; // 6 tht neigh
+
+                            if (new_element[i, j] == "*")
+                            {
+                                count = count + 1;
+                            }
+                            j = j - 2; // 4th neigh
+                            if (new_element[i, j] == "*")
+                            {
+                                count = count + 1;
+                            }
+                            ////////////////////////////////////////////
+                            i = i + 1; //7th neigh
+                            if (new_element[i, j] == "*")
+                            {
+                                count = count + 1;
+                            }
+                            j = j + 1; // 8th neigh
+                            if (new_element[i, j] == "*")
+                            {
+                                count = count + 1;
+                            }
+                            j = j + 1; // 9th neigh
+                            if (new_element[i, j] == "*")
+                            {
+                                count = count + 1;
+                            }
+
+                            i = i - 1;
+                            j = j - 1;
+
+                            int row1 = i;
+                            int col1 = j;
+                            if (count == 3)
+                            {
+                               
+                                Final_element[row1, col1] = "*";
+                            
+                            }
+                            count = 0; // make count value to zero for the next interation
+                        }
+                    }
+                
+                }
+            }
+
+            // Create the text file and print the output in the file
+	   try{
+            FileStream fsw = new FileStream("Output.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter w = new StreamWriter(fsw);
+
+            for (int l = 1; l < 6; l++)
+            { 
+                for (int m=1; m<6;m++){
+                string output = Final_element[l,m];
+                w.Write(output);
+                }
+            w.WriteLine();
+           }
+
+            w.WriteLine("-------------------"); // Break line for the next iteration
+            w.Flush();
+            w.Close();
+            fsw.Close();
+        }
+	   catch(IOException e){
+	
+	   }
+            // Transfer the Iteration which is in Final_element to result to 7*7 matrix for the next iteration
+
+            for (int i3 = 0; i3 < 7; i3++)
+            {
+                for (int j3 = 0; j3 < 7; j3++)
+                {
+                    new_element[i3, j3] = Final_element[i3, j3];
+                
+                }
+            }
+
+            // Repeat the loop for 10 times
+            repeat++;
+            if (repeat < 11)
+            {
+                goto Repeat10;
+            }
+        }
+    }
+}
+
+

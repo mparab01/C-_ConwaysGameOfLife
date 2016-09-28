@@ -3,6 +3,7 @@
 //Major : EE Grad Student
 
 // Conway’s Game of Life Assignment
+// Including everything in the main method is not a good practice(Opp. to OOP). This code was written for Intro to Java course 4 years back...
 
 using System;
 using System.Collections.Generic;
